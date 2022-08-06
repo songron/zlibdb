@@ -7,6 +7,7 @@ from types import GeneratorType
 
 import zlibdb
 
+
 class BasicTest(unittest.TestCase):
 
     def setUp(self):
@@ -33,7 +34,7 @@ class BasicTest(unittest.TestCase):
         self.assertEqual(db.get('nonexist'), None)
         with self.assertRaises(KeyError):
             db['nonexist']
-            
+
     def test_deletion(self):
         db = zlibdb.open(self.db_path)
         db['key1'] = 'value1'
@@ -82,7 +83,6 @@ class BasicTest(unittest.TestCase):
             db[k] = 'value'
         for i, x in enumerate(db):
             self.assertEqual(x, keys[i])
-
 
     def test_overwrite(self):
         db = zlibdb.open(self.db_path)
