@@ -108,19 +108,3 @@ class ZlibDB:
 def open(*args, **kwargs):
     """Returns an instance of ZlibDB."""
     return ZlibDB(*args, **kwargs)
-
-
-if __name__ == '__main__':
-    import random
-    db = open('/tmp/zlib.db', level=9)
-    print(db.encoding, db.level)
-
-    for i in range(10):
-        db[i] = str(random.random())
-        db[str(i)] = str(random.random())
-        db[i+100] = str(random.random())
-
-    for k, v in db.items():
-        print(k, v, v.decode('utf8'))
-
-    db.close()
