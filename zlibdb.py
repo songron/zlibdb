@@ -70,6 +70,15 @@ class ZlibDB:
         for row in c.execute('SELECT key, value FROM kv'):
             yield (row[0], zlib.decompress(row[1]))
 
+    def range(self, start, end):
+        """Generator of (key, value) tuples in the key range [start, end)."""
+        c = self.conn.cursor()
+        for row in c.execute(
+            'SELECT key, value FROM kv WHERE key >= ? AND key < ? ORDER BY key ASC',
+            (start, end)
+        ):
+            yield (row[0], zlib.decompress(row[1]))
+
     def __contains__(self, key):
         """Returns True if the key exists in the db; False otherwise."""
         row = self.conn.execute(

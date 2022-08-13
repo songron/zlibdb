@@ -76,6 +76,20 @@ class BasicTest(unittest.TestCase):
         self.assertTrue(isinstance(_items, GeneratorType))
         self.assertEqual(list(_items), items)
 
+    def test_range(self):
+        db = zlibdb.open(self.db_path)
+        items = [(str(i), str(i).encode('utf8')) for i in range(20)]
+        for k, v in items:
+            db[k] = v
+
+        start = '1'
+        end = '3'
+        truth = sorted(x for x in items if x[0] >= start and x[0] < end)
+
+        _items = db.range('1', '3')
+        self.assertTrue(isinstance(_items, GeneratorType))
+        self.assertEqual(list(_items), truth)
+
     def test_iter(self):
         db = zlibdb.open(self.db_path)
         keys = ['a', 'b', 'c']
